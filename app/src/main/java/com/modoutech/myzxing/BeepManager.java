@@ -41,8 +41,8 @@ final class BeepManager implements MediaPlayer.OnErrorListener, Closeable {
 
     private final Activity activity;
     private MediaPlayer mediaPlayer;
-    private boolean playBeep;
-    private boolean vibrate;
+    private boolean playBeep;//打开提示音是否成功
+    private boolean vibrate;//是否震动
 
     BeepManager(Activity activity) {
         this.activity = activity;
@@ -62,6 +62,9 @@ final class BeepManager implements MediaPlayer.OnErrorListener, Closeable {
         }
     }
 
+    /**
+     * 播放声音和震动
+     */
     synchronized void playBeepSoundAndVibrate() {
         if (playBeep && mediaPlayer != null) {
             mediaPlayer.start();
