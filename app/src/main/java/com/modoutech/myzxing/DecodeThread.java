@@ -62,6 +62,7 @@ final class DecodeThread extends Thread {
     }
 
     // The prefs can't change while the thread is running, so pick them up once here.
+    // 线程正在运行时，prefs无法更改，因此在这里将它们选中。
     if (decodeFormats == null || decodeFormats.isEmpty()) {
       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
       decodeFormats = EnumSet.noneOf(BarcodeFormat.class);

@@ -81,7 +81,8 @@ import static com.modoutech.myzxing.MainActivity.reCode;
  * This activity opens the camera and does the actual scanning on a background thread. It draws a
  * viewfinder to help the user place the barcode correctly, shows feedback as the image processing
  * is happening, and then overlays the results when a scan is successful.
- *
+ * 这个活动打开相机，并在后台线程上进行实际扫描。它绘制一个取景器来帮助用户正确地放置条形码，
+ * 在图像处理过程中显示反馈，然后在扫描成功时覆盖结果。
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
@@ -271,7 +272,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     dataString.contains("/m/products/scan")) {
 
                 // Scan only products and send the result to mobile Product Search.
-                //只扫描产品，并将结果发送到移动产品搜索
+                // 只扫描产品，并将结果发送到移动产品搜索
                 source = IntentSource.PRODUCT_SEARCH_LINK;
                 sourceUrl = dataString;
                 decodeFormats = DecodeFormatManager.PRODUCT_FORMATS;
@@ -586,6 +587,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     // Put up our own UI for how to handle the decoded contents.
+    // 为如何处理解码内容设置我们自己的UI。
     private void handleDecodeInternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode) {
 
         maybeSetClipboard(resultHandler);
@@ -674,6 +676,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     // Briefly show the contents of the barcode, then handle the result outside Barcode Scanner.
+    // 简要地显示条形码的内容，然后处理条形码扫描器外的结果。
     private void handleDecodeExternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode) {
 
         if (barcode != null) {

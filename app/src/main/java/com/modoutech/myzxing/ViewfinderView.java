@@ -101,11 +101,13 @@ public final class ViewfinderView extends View {
 
     if (resultBitmap != null) {
       // Draw the opaque result bitmap over the scanning rectangle
+      // 在扫描矩形中绘制不透明的结果位图
       paint.setAlpha(CURRENT_POINT_OPACITY);
       canvas.drawBitmap(resultBitmap, null, frame, paint);
     } else {
 
       // Draw a red "laser scanner" line through the middle to show decoding is active
+      // 在中间画一个红色的“激光扫描器”，显示解码是活跃的
       paint.setColor(laserColor);
       paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
       scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
@@ -168,7 +170,7 @@ public final class ViewfinderView extends View {
 
   /**
    * Draw a bitmap with the result points highlighted instead of the live scanning display.
-   *
+   * 绘制一个带有结果点的位图，而不是实时扫描显示。
    * @param barcode An image of the decoded barcode.
    */
   public void drawResultBitmap(Bitmap barcode) {

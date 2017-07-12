@@ -33,13 +33,12 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private ViewfinderView viewfinderView;//扫描视图
     private BeepManager beepManager;//提示音管理类
     private AmbientLightManager ambientLightManager;//灯光管理类
-    private Result savedResultToShow;//结果
+    private InactivityTimer inactivityTimer;
     private MainActivityHandler handler;
     private Collection<BarcodeFormat> decodeFormats;
     private Map<DecodeHintType, ?> decodeHints;
     private String characterSet;
     private IntentSource source;
-    private String sourceUrl;
     private boolean hasSurface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
         hasSurface = false;
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
+        inactivityTimer = new InactivityTimer(this);
         beepManager = new BeepManager(this);
         ambientLightManager = new AmbientLightManager(this);
 
@@ -64,47 +64,10 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         // first launch. That led to bugs where the scanning rectangle was the wrong size and partially
         // off screen.
         cameraManager = new CameraManager(getApplication());
-
+        inactivityTimer.onResume();
         viewfinderView.setCameraManager(cameraManager);
 
         ambientLightManager.start(cameraManager);
-
-        Intent intent = getIntent();
-
-        if (intent != null) {
-
-            String action = intent.getAction();
-
-            if (Intents.Scan.ACTION.equals(action)) {
-
-                // Scan the formats the intent requested, and return the result to the calling activity.
-                source = IntentSource.NATIVE_APP_INTENT;
-                decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
-                decodeHints = DecodeHintManager.parseDecodeHints(intent);
-
-                if (intent.hasExtra(Intents.Scan.WIDTH) && intent.hasExtra(Intents.Scan.HEIGHT)) {
-                    int width = intent.getIntExtra(Intents.Scan.WIDTH, 0);
-                    int height = intent.getIntExtra(Intents.Scan.HEIGHT, 0);
-                    if (width > 0 && height > 0) {
-                        cameraManager.setManualFramingRect(width, height);
-                    }
-                }
-
-                if (intent.hasExtra(Intents.Scan.CAMERA_ID)) {
-                    int cameraId = intent.getIntExtra(Intents.Scan.CAMERA_ID, -1);
-                    if (cameraId >= 0) {
-                        cameraManager.setManualCameraId(cameraId);
-                    }
-                }
-
-                String customPromptMessage = intent.getStringExtra(Intents.Scan.PROMPT_MESSAGE);
-                if (customPromptMessage != null) {
-                    Toast.makeText(this,customPromptMessage,Toast.LENGTH_SHORT).show();
-                }
-
-            }
-            characterSet = intent.getStringExtra(Intents.Scan.CHARACTER_SET);
-        }
 
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
@@ -126,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         ambientLightManager.stop();
         beepManager.close();
         cameraManager.closeDriver();
-
+        inactivityTimer.onPause();
         if (!hasSurface) {
             SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
             SurfaceHolder surfaceHolder = surfaceView.getHolder();
@@ -134,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         }
 
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        inactivityTimer.shutdown();
+        super.onDestroy();
     }
 
     ViewfinderView getViewfinderView() {
@@ -153,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     }
 
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
+        inactivityTimer.onActivity();
         beepManager.playBeepSoundAndVibrate();
         Toast.makeText(this, rawResult.getText(), Toast.LENGTH_SHORT).show();
 

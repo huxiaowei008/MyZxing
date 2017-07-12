@@ -18,7 +18,7 @@ package com.modoutech.myzxing.integration;
 
 /**
  * <p>Encapsulates the result of a barcode scan invoked through {@link IntentIntegrator}.</p>
- *
+ * 封装调用通过的barcode扫描的结果
  * @author Sean Owen
  */
 public final class IntentResult {
