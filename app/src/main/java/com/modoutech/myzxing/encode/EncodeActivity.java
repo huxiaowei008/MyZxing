@@ -49,7 +49,7 @@ import java.util.regex.Pattern;
 /**
  * This class encodes data from an Intent into a QR code, and then displays it full screen so that
  * another person can scan it with their device.
- *
+ *  这个类将数据从一个意图编码到二维码中，然后显示它的全屏，这样另一个人就可以用他们的设备扫描它
  * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class EncodeActivity extends Activity {

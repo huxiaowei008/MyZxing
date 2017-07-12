@@ -27,7 +27,7 @@ import java.net.URLEncoder;
 /**
  * Manages functionality related to responding to requests to scan from an HTTP link in a web page.
  * See <a href="https://github.com/zxing/zxing/wiki/ScanningFromWebPages">ScanningFromWebPages</a>.
- *
+ * 管理相关的功能，以响应从web页面的HTTP链接进行扫描的请求。
  * @author Sean Owen
  */
 final class ScanFromWebPageManager {

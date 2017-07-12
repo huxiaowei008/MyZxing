@@ -241,6 +241,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             if (Intents.Scan.ACTION.equals(action)) {
 
                 // Scan the formats the intent requested, and return the result to the calling activity.
+                // 扫描意图请求的格式，并将结果返回给调用活动。
                 source = IntentSource.NATIVE_APP_INTENT;
                 decodeFormats = DecodeFormatManager.parseDecodeFormats(intent);
                 decodeHints = DecodeHintManager.parseDecodeHints(intent);
@@ -270,6 +271,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     dataString.contains("/m/products/scan")) {
 
                 // Scan only products and send the result to mobile Product Search.
+                //只扫描产品，并将结果发送到移动产品搜索
                 source = IntentSource.PRODUCT_SEARCH_LINK;
                 sourceUrl = dataString;
                 decodeFormats = DecodeFormatManager.PRODUCT_FORMATS;
@@ -277,7 +279,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             } else if (isZXingURL(dataString)) {
 
                 // Scan formats requested in query string (all formats if none specified).
+                // 在查询字符串中请求的扫描格式(如果没有指定格式)
                 // If a return URL is specified, send the results there. Otherwise, handle it ourselves.
+                // 如果指定了返回URL，则将结果发送到那里。否则，我们自己来处理。
                 source = IntentSource.ZXING_LINK;
                 sourceUrl = dataString;
                 Uri inputUri = Uri.parse(dataString);
@@ -297,9 +301,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         if (hasSurface) {
             // The activity was paused but not stopped, so the surface still exists. Therefore
             // surfaceCreated() won't be called, so init the camera here.
+            // 活动暂停了，但没有停止，所以表面仍然存在。因此
+            // surface创建()不会被调用，所以在这里初始化相机。
             initCamera(surfaceHolder);
         } else {
             // Install the callback and wait for surfaceCreated() to init the camera.
+            // 安装回调，并等待创建()初始化相机
             surfaceHolder.addCallback(this);
         }
     }
@@ -384,6 +391,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             case KeyEvent.KEYCODE_FOCUS:
             case KeyEvent.KEYCODE_CAMERA:
                 // Handle these events so they don't launch the Camera app
+                // 处理这些事件，所以他们不会启动相机应用程序
                 return true;
             // Use volume up/down to turn on light
             case KeyEvent.KEYCODE_VOLUME_DOWN:
