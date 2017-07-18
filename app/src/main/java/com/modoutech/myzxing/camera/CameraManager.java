@@ -313,7 +313,7 @@ public final class CameraManager {
   /**
    * A factory method to build the appropriate LuminanceSource object based on the format
    * of the preview buffers, as described by Camera.Parameters.
-   *
+   * 一种工厂方法，根据摄像机的描述，根据预览缓冲区的格式构建适当的亮度源对象。参数。
    * @param data A preview frame.
    * @param width The width of the image.
    * @param height The height of the image.

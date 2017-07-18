@@ -67,7 +67,7 @@ final class DecodeHandler extends Handler {
   /**
    * Decode the data within the viewfinder rectangle, and time how long it took. For efficiency,
    * reuse the same reader objects from one decode to the next.
-   *
+   * 解码取景器矩形中的数据，以及时间长度。为了提高效率，可以将相同的阅读器对象从一个解码到另一个。
    * @param data   The YUV preview frame.
    * @param width  The width of the preview frame.
    * @param height The height of the preview frame.

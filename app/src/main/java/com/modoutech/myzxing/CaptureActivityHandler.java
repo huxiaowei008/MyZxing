@@ -71,6 +71,7 @@ public final class CaptureActivityHandler extends Handler {
     state = State.SUCCESS;
 
     // Start ourselves capturing previews and decoding.
+    // 开始捕捉预览和解码
     this.cameraManager = cameraManager;
     cameraManager.startPreview();
     restartPreviewAndDecode();
