@@ -61,6 +61,7 @@ public final class CameraManager {
   /**
    * Preview frames are delivered here, which we pass on to the registered handler. Make sure to
    * clear the handler so it will only receive one message.
+   * 这里提供了预览帧，我们将它传递给已注册的处理程序。确保清除处理程序，以便只接收一条消息。
    */
   private final PreviewCallback previewCallback;
 
@@ -72,7 +73,7 @@ public final class CameraManager {
   
   /**
    * Opens the camera driver and initializes the hardware parameters.
-   *
+   * 打开相机驱动程序并初始化硬件参数
    * @param holder The surface object which the camera will draw preview frames into.
    * @throws IOException Indicates the camera driver failed to open.
    */
@@ -142,6 +143,7 @@ public final class CameraManager {
 
   /**
    * Asks the camera hardware to begin drawing preview frames to the screen.
+   * 要求相机硬件开始将预览帧绘制到屏幕上.
    */
   public synchronized void startPreview() {
     OpenCamera theCamera = camera;
