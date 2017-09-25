@@ -29,7 +29,7 @@ import java.util.concurrent.RejectedExecutionException;
 
 /**
  * Finishes an activity after a period of inactivity if the device is on battery power.
- * 完成一项活动后，如果设备是在电池电源上的一段时间内不活动。
+ * activity在一段时间内不处于活动状态就会finish掉。
  */
 final class InactivityTimer {
 
